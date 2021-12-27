@@ -1,10 +1,13 @@
 class AuthenticationTokenServices
 
+  HMAC_SECRET = 'complicated_password'
+  ALGORITHM = 'HS256'.freeze
+
   def self.encode(payload)
-    token = JWT.encode(payload, HMAC_SECRET, ALGORITHM)
+    JWT.encode(payload, HMAC_SECRET, ALGORITHM)
   end
 
-  def auth_header
+  def self.auth_header
     request.headers['Authorization']
   end
 
@@ -20,14 +23,4 @@ class AuthenticationTokenServices
 
   end
 
-  private
-
-  def HMAC_SECRET
-    'complicated_password'
-  end
-
-  def ALGORITHM
-    'HS256'
-  end
-  
 end
