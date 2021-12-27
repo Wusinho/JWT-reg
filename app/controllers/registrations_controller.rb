@@ -7,10 +7,11 @@ class RegistrationsController < ApplicationController
       render json: {
         user: @user.username,
         email: @user.email,
-      }, 
-      status: :ok
+        token: token,
+        status: :ok
+      } 
       rescue => e
-      render json: {error: e, status: :bad_request}.to_json
+      render json: {error: e, status: :bad_request}
     end
 
   end
