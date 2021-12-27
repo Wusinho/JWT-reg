@@ -1,8 +1,7 @@
 class RegistrationsController < ApplicationController
   
   def create
-    @user = User.create(user_params)
-
+    @user = User.new(registration_params)
     if @user.save
       token = AuthenticationTokenServices.encode(@user)
       render json: {
@@ -10,15 +9,15 @@ class RegistrationsController < ApplicationController
         email: @user.email,
       }, status: :ok
     else
-      render json: {error: 'Error creating'}, status: :bad_request
+      render json: {error: 'Error creating user'}, status: :bad_request
     end
 
   end
 
   private
 
-  def user_params
-    params.permit(:username, :email, :password, :password_confirmation )
+  def registration_params
+    params.require(:registration).permit(:username, :email, :password, :password_confirmation )
   end
 
 end
