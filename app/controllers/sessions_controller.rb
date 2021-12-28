@@ -22,7 +22,6 @@ class SessionsController < ApplicationController
 
   def authenticate_user
     render json: { error: 'Invalid password, username or e-mail.', status: :unauthorized} 
-    
   end
 
   def session_params
