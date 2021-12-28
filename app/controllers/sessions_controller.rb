@@ -2,6 +2,9 @@ class SessionsController < ApplicationController
   before_action :set_user, only: [:create]
 
   def create
+
+    return authenticate_user if @user.nil? || !@user.authenticate(session_params[:password])
+
     token = AuthenticationTokenServices.encode(@user)
     render json: {
       username: @user.username,
@@ -15,8 +18,11 @@ class SessionsController < ApplicationController
 
   def set_user
       @user = User.find_by(email: session_params[:email])
+  end
 
-      render json: { error: 'Invalid password, username or e-mail.', status: :unauthorized} if @user.nil? || !@user.authenticate(session_params[:password])
+  def authenticate_user
+    render json: { error: 'Invalid password, username or e-mail.', status: :unauthorized} 
+    
   end
 
   def session_params
