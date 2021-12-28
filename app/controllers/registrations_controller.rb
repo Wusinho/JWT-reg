@@ -5,10 +5,10 @@ class RegistrationsController < ApplicationController
     @user = User.create!(registration_params)
       token = AuthenticationTokenServices.encode(@user)
       render json: {
-        user: @user.username,
+        username: @user.username,
         email: @user.email,
         token: token,
-        status: :ok
+        isLoggedIn: true
       } 
       rescue => e
       render json: {error: e, status: :bad_request}
