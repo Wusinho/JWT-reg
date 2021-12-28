@@ -48,6 +48,6 @@ class BooksController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def book_params
-      params.require(:book).permit(:title)
+      params.require(:book).permit(:title).merge(user_id: @current_user.id)
     end
 end
