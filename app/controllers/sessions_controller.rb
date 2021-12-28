@@ -1,20 +1,27 @@
 class SessionsController < ApplicationController
-  before_action :set_user
+  before_action :set_user, only: [:create]
 
   def create
     token = AuthenticationTokenServices.encode(@user)
+    render json: {
+      username: @user.username,
+      email: @user.email,
+      token: token,
+      isLoggedIn: true
+    }
   end
-
-
 
   private
 
   def set_user
-    @user = User.find_by(params[:email])
-    
+    begin
+      @user = User.find(params[:email])
+    rescue => e
+      render json: { error: e, status: :unauthorized}
+    end
   end
 
   def session_params
-    params.permit(:email, :password)
+    params.require(:session).permit(:email, :password)
   end
 end
