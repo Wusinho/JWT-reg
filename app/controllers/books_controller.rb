@@ -1,6 +1,6 @@
 class BooksController < ApplicationController
   include ActionController::HttpAuthentication::Token
-  before_action :authenticate_user
+  before_action :authenticate_user, only: [:create]
   before_action :set_book, only: [:show, :update, :destroy]
 
   # GET /books

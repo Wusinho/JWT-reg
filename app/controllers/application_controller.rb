@@ -6,7 +6,7 @@ class ApplicationController < ActionController::API
     token, _options = token_and_options(request)
     return render json: { error: 'You must log in first.' }, status: :unauthorized if token.nil?
 
-    message = AuthenticationTokenService.decode(token)
+    message = AuthenticationTokenServices.decode(token)
     return render json: message, status: :unauthorized if message[:error]
 
     user_id = message[:user_id]
