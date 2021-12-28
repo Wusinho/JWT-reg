@@ -3,7 +3,7 @@ class SessionsController < ApplicationController
 
   def create
 
-    return authenticate_user if @user.nil? || !@user.authenticate(session_params[:password])
+    return authentication_error if @user.nil? || !@user.authenticate(session_params[:password])
 
     token = AuthenticationTokenServices.encode(@user)
     render json: {
@@ -20,7 +20,7 @@ class SessionsController < ApplicationController
       @user = User.find_by(email: session_params[:email])
   end
 
-  def authenticate_user
+  def authentication_error
     render json: { error: 'Invalid password, username or/and e-mail.', status: :unauthorized} 
   end
 
