@@ -14,11 +14,9 @@ class SessionsController < ApplicationController
   private
 
   def set_user
-    begin
-      @user = User.find(params[:email])&.authenticate(params[:password])
-    rescue => e
-      render json: { error: e, status: :unauthorized}
-    end
+      @user = User.find_by(email: session_params[:email])
+
+      render json: { error: 'Invalid password, username or e-mail.', status: :unauthorized} if @user.nil? || !@user.authenticate(session_params[:password])
   end
 
   def session_params
