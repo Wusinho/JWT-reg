@@ -1,18 +1,24 @@
 class ApplicationController < ActionController::API
+  # before_action :authenticate_user
 
   private
 
-  def authenticate_user
-    token, _options = token_and_options(request)
-    return render json: { error: 'You must log in first.' }, status: :unauthorized if token.nil?
+  # def authenticate_user
+  #   authentication_request do |token, options|
+  #     User.find_by(auth_token: token)
+  #   end
+  #   # byebug
+  #   # decoded_token = AuthenticationTokenServices.decode
+  #   # return unless decoded_token
 
-    message = AuthenticationTokenServices.decode(token)
-    return render json: message, status: :unauthorized if message[:error]
+  #   # user_id = decoded_token[0]['user_id']
+  #   # @current_user = User.find_by(id: user_id)
 
-    user_id = message[:user_id]
-    @current_user = User.find(user_id)
-  rescue ActiveRecord::RecordNotFound
-    render json: { error: 'No user found.' }, status: :unauthorized
-    
+  #   # return unauthorized if @current_user.nil?
+  # end
+
+  def unauthorized
+    render json: { message: 'Please log in' }, status: :unauthorized 
   end
+
 end

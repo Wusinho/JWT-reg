@@ -1,7 +1,8 @@
+require_relative '../services/authenticate_user'
+
 class BooksController < ApplicationController
-  include ActionController::HttpAuthentication::Token
-  before_action :authenticate_user, only: [:create]
-  before_action :set_book, only: [:show, :update, :destroy]
+  include AuthenticateUser
+  before_action :authorized, only: %i[show update destroy]
 
   # GET /books
   def index
@@ -17,12 +18,12 @@ class BooksController < ApplicationController
 
   # POST /books
   def create
-    @book = Book.new(book_params)
+    @book = Book.create!(book_params)
 
     if @book.save
-      render json: @book, status: :created, location: @book
+      render json: @book, status: :created
     else
-      render json: @book.errors, status: :unprocessable_entity
+      render json: { error: 'error' }, status: :unprocessable_entity
     end
   end
 
@@ -41,13 +42,13 @@ class BooksController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
+    # Use callbacks to share common setup or constrcorsaints between actions.
     def set_book
       @book = Book.find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.
     def book_params
-      params.require(:book).permit(:title).merge(user_id: @current_user.id)
+      params.require(:book).permit(:title).merge(user_id: current_user.id)
     end
 end

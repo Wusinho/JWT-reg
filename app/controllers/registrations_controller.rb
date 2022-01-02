@@ -2,11 +2,11 @@ class RegistrationsController < ApplicationController
   
   def create
     begin
-    @user = User.create!(registration_params)
-      token = AuthenticationTokenServices.encode(@user)
+    user = User.create!(registration_params)
+      token = AuthenticationTokenServices.encode(user)
       render json: {
-        username: @user.username,
-        email: @user.email,
+        username: user.username,
+        email: user.email,
         token: token,
         isLoggedIn: true
       } 
