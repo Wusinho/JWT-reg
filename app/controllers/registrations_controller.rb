@@ -8,7 +8,8 @@ class RegistrationsController < ApplicationController
         username: user.username,
         email: user.email,
         token: token,
-        isLoggedIn: true
+        isLoggedIn: true,
+        status: :ok
       } 
       rescue => e
       render json: {error: e, status: :bad_request}

@@ -10,7 +10,8 @@ class SessionsController < ApplicationController
       username: @user.username,
       email: @user.email,
       token: token,
-      isLoggedIn: true
+      isLoggedIn: true,
+      status: :ok
     }
   end
 
