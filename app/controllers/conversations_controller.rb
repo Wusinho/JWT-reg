@@ -1,4 +1,8 @@
+require_relative '../services/authenticate_user'
+
 class ConversationsController < ApplicationController
+  include AuthenticateUser
+  before_action :authorized, only: %i[show update destroy]
 
   def index
     @conversations = Conversation.all

@@ -1,4 +1,8 @@
+require_relative '../services/authenticate_user'
+
 class MessagesController < ApplicationController
+  include AuthenticateUser
+  before_action :authorized, only: %i[show update destroy]
 
   def create
     @message = Message.new(message_params)
