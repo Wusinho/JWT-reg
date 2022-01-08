@@ -26,7 +26,7 @@ class ConversationsController < ApplicationController
   private
 
   def conversation_params
-    params.require(:conversation).permit(:title, :user_id)
+    params.require(:conversation).permit(:title).merge(user_id: current_user.id)
   end
 
 end
