@@ -20,7 +20,6 @@ module AuthenticateUser
   end
 
   def current_user
-
     return unless decoded_token
     decoding = decoded_token
     user_id = decoding[0]['user_id']
