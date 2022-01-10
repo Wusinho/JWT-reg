@@ -18,6 +18,9 @@ class ConversationsController < ApplicationController
       ).serializable_hash
       ActionCable.server.broadcast 'conversations_channel', serialized_data
       head :ok
+    # else
+      # render json: { error: 'error' }, status: :unprocessable_entity
+
     end
 
 

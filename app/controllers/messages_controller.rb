@@ -5,13 +5,15 @@ class MessagesController < ApplicationController
   before_action :authorized, only: %i[show update destroy]
 
   def create
+    byebug
     @message = Message.new(message_params)
     @conversation = Conversation.find(message_params[:conversation_id])
-
     if @message.save
       serialized_data = ActiveModelSerializers::Adapter::Json.new(MessageSerializer.new(@message)).serializable_hash
       MessagesChannel.broadcast_to @conversation, serialized_data
       head :ok
+    else
+      render json: { error: 'error' }, status: :unprocessable_entity
 
     end
   end

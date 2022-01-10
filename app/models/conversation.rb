@@ -1,5 +1,5 @@
 class Conversation < ApplicationRecord
   has_many :messages
-  belongs_to :user_id
+  belongs_to :user
   validates :title, presence: true
 end
