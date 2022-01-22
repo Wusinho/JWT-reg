@@ -3,6 +3,7 @@ class RegistrationsController < ApplicationController
   def create
     begin
     user = User.create!(registration_params)
+    byebug
       token = AuthenticationTokenServices.encode(user)
       render json: {
         username: user.username,

@@ -20,11 +20,17 @@ class ConversationsController < ApplicationController
       head :ok
     # else
       # render json: { error: 'error' }, status: :unprocessable_entity
-
     end
-
-
   end
+
+  def show
+    
+  end
+
+  def set_conversation
+    
+  end
+
 
   private
 

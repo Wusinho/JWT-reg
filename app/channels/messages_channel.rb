@@ -2,6 +2,9 @@ class MessagesChannel < ApplicationCable::Channel
   def subscribed
     # stream_from "some_channel"
     conversation = Conversation.find(params[:conversation])
+    puts '--------------------------'
+    puts params[:conversation]
+
     stream_for conversation
   end
 
