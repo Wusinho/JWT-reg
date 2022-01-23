@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_23_154353) do
+ActiveRecord::Schema.define(version: 2022_01_23_154600) do
 
   create_table "applications", force: :cascade do |t|
     t.boolean "status"
@@ -72,6 +72,7 @@ ActiveRecord::Schema.define(version: 2022_01_23_154353) do
     t.string "password_digest"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.boolean "admin", default: false
   end
 
   add_foreign_key "applications", "jobs"
