@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
 
   resources :books
+  resources :jobs
   resources :registrations, only: [:create]
   resources :sessions, only: [:create]
   resources :users, only: [:create]

@@ -1,4 +1,7 @@
+require_relative '../services/authenticate_user'
+
 class JobsController < ApplicationController
+  include AuthenticateUser
   before_action :authorized, only: %i[show update destroy]
 
   # GET /books
@@ -13,12 +16,9 @@ class JobsController < ApplicationController
     render json: @job
   end
 
-  # POST /books
   def create
     @job = Job.new(job_params)
-
-    return 'not and admin' unless authorize @job
-
+    authorize @job
     if @job.save
       render json: @job, status: :created
     else
@@ -46,5 +46,6 @@ class JobsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def job_params
       params.require(:job).permit(:title, :description )
+      # params.permit(:title, :description )
     end
 end

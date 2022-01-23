@@ -9,4 +9,10 @@ class JobPolicy
   def update?
     user.admin?
   end
+
+  def create?
+    byebug
+    user.admin?
+  end
+
 end

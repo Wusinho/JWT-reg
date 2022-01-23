@@ -9,6 +9,7 @@ class SessionsController < ApplicationController
     render json: {
       username: @user.username,
       email: @user.email,
+      admin: @user.admin,
       token: token,
       isLoggedIn: true,
       status: :ok
@@ -26,7 +27,7 @@ class SessionsController < ApplicationController
   end
 
   def session_params
-    # params.require(:session).permit(:email, :password)
-    params.permit(:email, :password, :username)
+    params.require(:session).permit(:email, :password)
+    # params.permit(:email, :password, :username)
   end
 end
