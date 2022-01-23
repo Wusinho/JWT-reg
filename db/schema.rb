@@ -10,7 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_22_174933) do
+ActiveRecord::Schema.define(version: 2022_01_23_154353) do
+
+  create_table "applications", force: :cascade do |t|
+    t.boolean "status"
+    t.integer "user_id", null: false
+    t.integer "job_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["job_id"], name: "index_applications_on_job_id"
+    t.index ["user_id"], name: "index_applications_on_user_id"
+  end
 
   create_table "books", force: :cascade do |t|
     t.string "title"
@@ -37,6 +47,15 @@ ActiveRecord::Schema.define(version: 2022_01_22_174933) do
     t.index ["user_id"], name: "index_extras_on_user_id"
   end
 
+  create_table "jobs", force: :cascade do |t|
+    t.string "title"
+    t.string "description"
+    t.integer "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_jobs_on_user_id"
+  end
+
   create_table "messages", force: :cascade do |t|
     t.string "text"
     t.integer "conversation_id", null: false
@@ -55,10 +74,13 @@ ActiveRecord::Schema.define(version: 2022_01_22_174933) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  add_foreign_key "applications", "jobs"
+  add_foreign_key "applications", "users"
   add_foreign_key "books", "users"
   add_foreign_key "conversations", "users"
   add_foreign_key "extras", "messages"
   add_foreign_key "extras", "users"
+  add_foreign_key "jobs", "users"
   add_foreign_key "messages", "conversations"
   add_foreign_key "messages", "users"
 end
