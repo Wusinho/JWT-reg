@@ -15,7 +15,9 @@ class JobsController < ApplicationController
 
   # POST /books
   def create
-    @job = Job.create!(book_params)
+    @job = Job.new(job_params)
+
+    return 'not and admin' unless authorize @job
 
     if @job.save
       render json: @job, status: :created
@@ -42,7 +44,7 @@ class JobsController < ApplicationController
 
 
     # Only allow a list of trusted parameters through.
-    def book_params
+    def job_params
       params.require(:job).permit(:title, :description )
     end
 end

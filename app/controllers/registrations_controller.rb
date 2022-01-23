@@ -3,7 +3,7 @@ class RegistrationsController < ApplicationController
   def create
     begin
     user = User.create!(registration_params)
-    byebug
+    # byebug
       token = AuthenticationTokenServices.encode(user)
       render json: {
         username: user.username,
@@ -21,7 +21,8 @@ class RegistrationsController < ApplicationController
   private
 
   def registration_params
-    params.require(:registration).permit(:username, :email, :password, :password_confirmation )
+    # params.require(:registration).permit(:username, :email, :password, :password_confirmation )
+    params.permit(:username, :email, :password, :password_confirmation )
   end
 
 end
