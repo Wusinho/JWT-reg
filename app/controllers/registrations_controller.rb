@@ -9,6 +9,7 @@ class RegistrationsController < ApplicationController
         username: user.username,
         email: user.email,
         token: token,
+        admin: user.admin,
         isLoggedIn: true,
         status: :ok
       } 
@@ -22,7 +23,7 @@ class RegistrationsController < ApplicationController
 
   def registration_params
     # params.require(:registration).permit(:username, :email, :password, :password_confirmation )
-    params.permit(:username, :email, :password, :password_confirmation )
+    params.permit(:username, :email, :password, :password_confirmation, :admin )
   end
 
 end
